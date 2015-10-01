@@ -1,0 +1,12 @@
+[Unit]
+Description=@@DESCRIPTION@@
+
+[Service]
+Environment="USER_CONFIG_FILE=@@USER_CONFIG_FILE@@"
+Environment="CAROS_APP_SYSTEMD_INSTANCE=%i"
+ExecStart=/opt/tposs/libexec/instance-wrapper.sh start @@APP_PREFIX@@/@@APPNAME@@/@@VERSION@@
+ExecStop=/opt/tposs/libexec/instance-wrapper.sh stop %p@%i
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -44,7 +44,8 @@ inherit systemd
 
 SYSTEMD_UNIT_NAME ?= "${APPNAME}"
 SYSTEMD_AUTO_ENABLE ?= "disable"
-SYSTEMD_SERVICE_${PN} = "${SYSTEMD_UNIT_NAME}.service"
+SYSTEMD@.service_${PN} = "${SYSTEMD_UNIT_NAME}@.service"
+SYSTEMD_INSTANCE_WRAPPER = /opt/tposs/libexec/instance-wrapper.sh"
 
 def gen_deps(d):
     import sys
@@ -171,14 +172,14 @@ do_install() {
     echo "log.console.level = false" >> ${D}/${SYSCONFIG_PREFIX}/${APPNAME}.conf
 
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${MIX_CLASS_FILES}/app-template.service ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
-    sed -i "s|@@DESCRIPTION@@|${DESCRIPTION}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
-    sed -i "s|@@VERSION@@|${APPVERSION}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
-    sed -i "s|@@APPNAME@@|${APPNAME}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
-    sed -i "s|@@APP_PREFIX@@|${APP_PREFIX}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
-    sed -i "s|@@MUTABLE_DIR@@|${MUTABLE_DIR}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
-    sed -i "s|@@USER_CONFIG_FILE@@|${USER_CONFIG_FILE}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
-    sed -i "s|@@APP_HOME@@|${APP_HOME}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}.service
+    install -m 0644 ${MIX_CLASS_FILES}/app-template@.service ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
+    sed -i "s|@@DESCRIPTION@@|${DESCRIPTION}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
+    sed -i "s|@@VERSION@@|${APPVERSION}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
+    sed -i "s|@@APPNAME@@|${APPNAME}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
+    sed -i "s|@@APP_PREFIX@@|${APP_PREFIX}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
+    sed -i "s|@@MUTABLE_DIR@@|${MUTABLE_DIR}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
+    sed -i "s|@@USER_CONFIG_FILE@@|${USER_CONFIG_FILE}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
+    sed -i "s|@@APP_HOME@@|${APP_HOME}|" ${D}${systemd_unitdir}/system/${SYSTEMD_UNIT_NAME}@.service
 }
 
 python do_mix_deps() {
